@@ -3,7 +3,10 @@ import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 
 export default function Navbar({ title, links }) {
   return (
-    <AppBar position="static">
+    <AppBar
+      position="static"
+      sx={{ display: "flex", flexDirection: "column" }}
+    >
       <Toolbar>
         {/* Título */}
 
