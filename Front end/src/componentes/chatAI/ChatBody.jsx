@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Box, Paper, Typography, Button } from "@mui/material";
 
-function Message({ message, onClickProducto }) {
+function Message({ message }) {
   const isUser = message.role === "user";
 
   return (
@@ -15,9 +15,13 @@ function Message({ message, onClickProducto }) {
       {message.tipo === "producto" ? (
         <Button
           variant="contained"
-          onClick={() => onClickProducto(message.mensaje)}
+          onClick={() => {
+            // Construir la URL dinámicamente
+            const url = `/productos/${message.mensaje.toLowerCase()}`;
+            window.location.href = url;
+          }}
         >
-          {message.mensaje} {/* por ejemplo: "Completar Datos / 填写信息" */}
+          Click aqui para completar datos / 点击这里填写信息
         </Button>
       ) : (
         <Paper
@@ -37,7 +41,7 @@ function Message({ message, onClickProducto }) {
   );
 }
 
-export default function ChatBody({ messages, onClickProducto }) {
+export default function ChatBody({ messages }) {
   const bottomRef = useRef(null);
 
   useEffect(() => {
@@ -57,7 +61,6 @@ export default function ChatBody({ messages, onClickProducto }) {
         <Message
           key={i}
           message={msg}
-          onClickProducto={onClickProducto}
         />
       ))}
       <div ref={bottomRef} />

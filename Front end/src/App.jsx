@@ -1,6 +1,7 @@
 // App.jsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Inicio from "./paginas/Inicio";
+import FormularioVolante from "./paginas/FormularioVolante";
 
 function App() {
   return (
@@ -11,8 +12,8 @@ function App() {
           element={<Inicio />}
         />
         <Route
-          path="/otra-ruta"
-          element={<h1>Otra ruta funciona</h1>}
+          path="/productos/volante"
+          element={<FormularioVolante />}
         />
       </Routes>
     </BrowserRouter>

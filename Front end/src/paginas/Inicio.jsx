@@ -35,6 +35,7 @@ export default function Inicio() {
           alignItems: "stretch", // ocupa todo el alto
           bgcolor: "#e8ebf0", // fondo del área del chat
           p: 2, // margen interno
+          height: "100%", // altura completa en md y auto en xs
         }}
       >
         <Box
@@ -44,7 +45,7 @@ export default function Inicio() {
             flexDirection: "column",
             borderRadius: 3,
             border: "1px solid #ccc",
-            boxShadow: "0px 8px 20px rgba(0,0,0,0.15)",
+            boxShadow: "0px 8px 20px rgba(197, 24, 24, 0.15)",
             overflow: "hidden",
             minWidth: 300, // ancho mínimo
           }}

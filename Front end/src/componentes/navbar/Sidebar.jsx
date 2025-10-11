@@ -15,10 +15,13 @@ import {
 import logo from "../../assets/dongfangLogo.png";
 import { Home, Info, ContactMail } from "@mui/icons-material";
 import ListItemMenu from "../general/ListItemMenu";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const drawerWidth = 260;
 
 export default function Sidebar({ mobileOpen, handleDrawerToggle, isMobile }) {
+  const navigate = useNavigate();
+
   const drawerContent = (
     <Box sx={{ textAlign: "center" }}>
       <Toolbar
@@ -56,13 +59,15 @@ export default function Sidebar({ mobileOpen, handleDrawerToggle, isMobile }) {
       <List sx={{ ml: "5px", mr: "5px" }}>
         <ListItemMenu
           icon={Home}
-          text={"Inicio"}
-          onClick={() => {}}
+          text="Inicio"
+          onClick={() => navigate("/")} // <-- función
         />
         <ListItemMenu
           icon={Info}
           text={"Acerca de"}
-          onClick={() => {}}
+          onClick={() => {
+            navigate("/otra-ruta");
+          }}
         />
         <ListItemMenu
           icon={ContactMail}

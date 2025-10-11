@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import ChatHeader from "./ChatHeader";
 import ChatBody from "./ChatBody";
 import ChatInput from "./ChatInput";
+import BotonProduct from "../producto/BotonProduct";
 
 export default function Chat() {
   const [messages, setMessages] = useState(() => {
@@ -44,11 +45,7 @@ export default function Chat() {
       if (productos.includes(respuesta.mensaje)) {
         setMessages((prev) => [
           ...prev,
-          {
-            role: "assistant",
-            mensaje: `Has seleccionado el producto: ${respuesta.mensaje}`,
-            tipo: "info",
-          },
+          { role: "assistant", mensaje: respuesta.mensaje, tipo: "producto" },
         ]);
       }
     } catch (error) {
@@ -68,19 +65,13 @@ export default function Chat() {
         overflow: "hidden",
       }}
     >
-      {/* Header */}
-      <Box sx={{ bgcolor: "#ffcccc", p: 2 }}>
+      <Box sx={{ bgcolor: "#ffcccc", p: 2, flexShrink: 0 }}>
         <ChatHeader />
       </Box>
 
       {/* Body */}
       <Box sx={{ flexGrow: 1, p: 2, bgcolor: "#f0f2f5", overflowY: "auto" }}>
-        <ChatBody
-          messages={messages}
-          onClickProducto={(producto) =>
-            alert(`Botón clickeado para ${producto}.`)
-          }
-        />
+        <ChatBody messages={messages} />
       </Box>
 
       {/* Input */}
@@ -91,8 +82,6 @@ export default function Chat() {
           handleSend={handleSend}
         />
       </Box>
-
-      {/* Botón de prueba si hay producto */}
     </Box>
   );
 }
