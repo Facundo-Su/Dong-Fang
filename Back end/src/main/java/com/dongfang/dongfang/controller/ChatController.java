@@ -20,8 +20,8 @@ public class ChatController {
     }
 
     @GetMapping("/messages")
-    public List<Mensaje> getMensajes(){
-        return chatService.getMensajes();
+    public List<Mensaje> getMensajes(@RequestBody Mensaje mensaje){
+        return chatService.getMensajes(mensaje.getIdUser());
     }
 
     @PostMapping("/send")

@@ -1,10 +1,8 @@
-import React, { useState } from "react";
-import { IconButton, Paper } from "@mui/material";
-import ChatIcon from "@mui/icons-material/Chat";
+import React, { useState, useEffect } from "react";
+import { Box } from "@mui/material";
 import ChatHeader from "./ChatHeader";
 import ChatBody from "./ChatBody";
 import ChatInput from "./ChatInput";
-import { useEffect } from "react";
 
 export default function Chat() {
   const [messages, setMessages] = useState(() => {
@@ -12,9 +10,6 @@ export default function Chat() {
     return saved ? JSON.parse(saved) : [];
   });
   const [input, setInput] = useState("");
-  const [open, setOpen] = useState(false);
-
-  const toggleChat = () => setOpen(!open);
 
   useEffect(() => {
     sessionStorage.setItem("chatMessages", JSON.stringify(messages));
@@ -23,7 +18,14 @@ export default function Chat() {
   const handleSend = async () => {
     if (!input.trim()) return;
 
-    const newMessages = { role: "user", mensaje: input };
+    // Obtener o generar ID de usuario
+    let idUser = sessionStorage.getItem("idUser");
+    if (!idUser) {
+      idUser = crypto.randomUUID();
+      sessionStorage.setItem("idUser", idUser);
+    }
+
+    const newMessages = { role: "user", mensaje: input, idUser: idUser };
     setMessages((prev) => [...prev, newMessages]);
     setInput("");
 
@@ -36,55 +38,61 @@ export default function Chat() {
 
       const respuesta = await res.json();
       setMessages((prev) => [...prev, respuesta]);
+
+      // Detectar si la AI devolvió un producto
+      const productos = ["Volante", "Tarjeta", "Folleto"];
+      if (productos.includes(respuesta.mensaje)) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "assistant",
+            mensaje: `Has seleccionado el producto: ${respuesta.mensaje}`,
+            tipo: "info",
+          },
+        ]);
+      }
     } catch (error) {
       console.error("Error al enviar el mensaje:", error);
     }
   };
 
   return (
-    <>
-      {/* Icono flotante */}
-      <IconButton
-        color="primary"
-        onClick={toggleChat}
-        sx={{
-          position: "fixed",
-          bottom: 20,
-          right: 20,
-          bgcolor: "primary.main",
-          color: "white",
-          "&:hover": { bgcolor: "primary.dark" },
-        }}
-      >
-        <ChatIcon />
-      </IconButton>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        width: "100%",
+        bgcolor: "white",
+        borderRadius: 3,
+        overflow: "hidden",
+      }}
+    >
+      {/* Header */}
+      <Box sx={{ bgcolor: "#ffcccc", p: 2 }}>
+        <ChatHeader />
+      </Box>
 
-      {/* Panel de chat */}
-      {open && (
-        <Paper
-          elevation={4}
-          sx={{
-            position: "fixed",
-            bottom: 80,
-            right: 20,
-            width: 300,
-            height: 400,
-            display: "flex",
-            flexDirection: "column",
-            p: 1,
-            borderRadius: 2,
-            overflow: "hidden",
-          }}
-        >
-          <ChatHeader toggleChat={toggleChat} />
-          <ChatBody messages={messages} />
-          <ChatInput
-            input={input}
-            setInput={setInput}
-            handleSend={handleSend}
-          />
-        </Paper>
-      )}
-    </>
+      {/* Body */}
+      <Box sx={{ flexGrow: 1, p: 2, bgcolor: "#f0f2f5", overflowY: "auto" }}>
+        <ChatBody
+          messages={messages}
+          onClickProducto={(producto) =>
+            alert(`Botón clickeado para ${producto}.`)
+          }
+        />
+      </Box>
+
+      {/* Input */}
+      <Box sx={{ p: 2, borderTop: "1px solid #eee" }}>
+        <ChatInput
+          input={input}
+          setInput={setInput}
+          handleSend={handleSend}
+        />
+      </Box>
+
+      {/* Botón de prueba si hay producto */}
+    </Box>
   );
 }

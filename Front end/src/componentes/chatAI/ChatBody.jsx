@@ -1,52 +1,63 @@
 import React, { useEffect, useRef } from "react";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography, Button } from "@mui/material";
 
-// Componente que renderiza un solo mensaje
-function Message({ message }) {
+function Message({ message, onClickProducto }) {
   const isUser = message.role === "user";
 
-  const containerStyles = {
-    textAlign: isUser ? "right" : "left",
-    mb: 1,
-  };
-
-  const paperStyles = {
-    display: "inline-block",
-    p: 1,
-    bgcolor: isUser ? "#DCF8C6" : "#EDEDED",
-    maxWidth: "80%",
-  };
-
   return (
-    <Box sx={containerStyles}>
-      <Paper sx={paperStyles}>
-        <Typography variant="body2">{message.mensaje}</Typography>
-      </Paper>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: isUser ? "flex-end" : "flex-start",
+        mb: 1,
+      }}
+    >
+      {message.tipo === "producto" ? (
+        <Button
+          variant="contained"
+          onClick={() => onClickProducto(message.mensaje)}
+        >
+          {message.mensaje} {/* por ejemplo: "Completar Datos / 填写信息" */}
+        </Button>
+      ) : (
+        <Paper
+          sx={{
+            p: 1.5,
+            bgcolor: isUser ? "#DCF8C6" : "#ffffff",
+            maxWidth: "75%",
+            boxShadow: "0px 2px 5px rgba(0,0,0,0.1)",
+            borderRadius: 2,
+            wordBreak: "break-word",
+          }}
+        >
+          <Typography variant="body2">{message.mensaje}</Typography>
+        </Paper>
+      )}
     </Box>
   );
 }
 
-// Componente principal del chat
-export default function ChatBody({ messages }) {
+export default function ChatBody({ messages, onClickProducto }) {
   const bottomRef = useRef(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const containerStyles = {
-    flexGrow: 1,
-    overflowY: "auto",
-    mb: 1,
-    p: 0.5,
-  };
-
   return (
-    <Box sx={containerStyles}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        overflowY: "auto",
+        height: "100%",
+      }}
+    >
       {messages.map((msg, i) => (
         <Message
           key={i}
           message={msg}
+          onClickProducto={onClickProducto}
         />
       ))}
       <div ref={bottomRef} />

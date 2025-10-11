@@ -11,6 +11,11 @@ export default function ChatInput({ input, setInput, handleSend }) {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && handleSend()}
+        sx={{
+          bgcolor: "#f0f2f5",
+          borderRadius: 2,
+          "& .MuiOutlinedInput-notchedOutline": { border: "none" },
+        }}
       />
       <Button
         variant="contained"

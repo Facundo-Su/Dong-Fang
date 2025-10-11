@@ -1,5 +1,5 @@
 import {
-  ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
   Typography,
@@ -7,21 +7,19 @@ import {
 
 export default function ListItemMenu({ icon: IconComponent, text, onClick }) {
   return (
-    <ListItem
-      button
+    <ListItemButton
       onClick={onClick}
       sx={{
         borderRadius: "50px",
         mb: 1,
         "&:hover": {
-          backgroundColor: "rgba(0,0,0,0.1)", // fondo ligeramente más oscuro
+          backgroundColor: "rgba(0,0,0,0.1)",
         },
         display: "flex",
         alignItems: "center",
-        width: "calc(100% - 10px)", // ancho completo menos margen
+        width: "calc(100% - 10px)",
         px: 2,
       }}
-      // borde redondeado y margen inferior
     >
       <ListItemIcon>
         <IconComponent sx={{ fontSize: "2em", mr: "10px" }} />
@@ -35,6 +33,6 @@ export default function ListItemMenu({ icon: IconComponent, text, onClick }) {
           {text}
         </Typography>
       </ListItemText>
-    </ListItem>
+    </ListItemButton>
   );
 }

@@ -9,6 +9,18 @@ public class Mensaje {
     private String role;
     private String mensaje;
 
+    private String idUser;
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
+    }
+
+
+
     public String getRole() {
         return role;
     }

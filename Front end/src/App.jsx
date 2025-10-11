@@ -1,6 +1,6 @@
 // App.jsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Test } from "./paginas/Test";
+import Inicio from "./paginas/Inicio";
 
 function App() {
   return (
@@ -8,11 +8,11 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<Test />}
+          element={<Inicio />}
         />
         <Route
-          path="/otra"
-          element={<div>Otra página</div>}
+          path="/otra-ruta"
+          element={<h1>Otra ruta funciona</h1>}
         />
       </Routes>
     </BrowserRouter>
