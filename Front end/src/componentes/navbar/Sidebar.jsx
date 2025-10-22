@@ -64,15 +64,17 @@ export default function Sidebar({ mobileOpen, handleDrawerToggle, isMobile }) {
         />
         <ListItemMenu
           icon={Info}
-          text={"Acerca de"}
+          text={"Formulario Volante"}
           onClick={() => {
             navigate("/productos/volante");
           }}
         />
         <ListItemMenu
-          icon={ContactMail}
-          text={"Contacto"}
-          onClick={() => {}}
+          icon={Info}
+          text={"Formulario Etiqueta"}
+          onClick={() => {
+            navigate("/productos/etiqueta");
+          }}
         />
       </List>
     </Box>
